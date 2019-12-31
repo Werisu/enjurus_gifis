@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:enjurus_gifis/ui/gif_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:share/share.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -114,9 +116,12 @@ class _HomePageState extends State<HomePage> {
           if(_procurar == null || index < snapshot.data["data"].length)
             /* GestureDetector para clicar na imagem */
             return GestureDetector(
-              child: Image.network(snapshot.data["data"][index]["images"]["fixed_height"]["url"],
-              height: 300.0,
-                  fit:BoxFit.cover,),
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: snapshot.data["data"][index]["images"]["fixed_height"]["url"],
+                height: 300.0,
+                fit: BoxFit.cover,
+              ),
               onTap: (){
                 Navigator.push(
                     context,
